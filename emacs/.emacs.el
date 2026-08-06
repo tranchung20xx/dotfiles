@@ -23,7 +23,7 @@
               redisplay-skip-fontification-on-input t
               inhibit-compacting-font-caches t
               bidi-inhibit-bpa t
-              read-process-output-max (* 8 1024 1024)
+              ;; read-process-output-max (* 1024 1024)
               process-adaptive-read-buffering nil
               pgtk-wait-for-event-timeout 0)
 
@@ -174,8 +174,12 @@
 (use-package markdown-mode :defer t)
 (use-package yaml-mode     :defer t)
 (use-package qml-mode      :defer t)
+(use-package json-mode     :defer t)
 
 (when (file-directory-p "~/.emacs.local/")
   (use-package my-misc
     :ensure nil
     :load-path "~/.emacs.local/"))
+
+(provide '.emacs)
+;;; .emacs.el ends here
