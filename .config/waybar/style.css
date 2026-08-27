@@ -1,6 +1,6 @@
 * {
-    font-family: 'Iosevka', 'Noto Sans Mono', 'Font Awesome 6 Free', 'Font Awesome 6 Brands', monospace;
-    font-size: 26px;
+    font-family: 'Iosevka', 'Noto Sans Mono', 'Font Awesome 7 Free', 'Noto Color Emoji', monospace;
+    font-size: 25px;
 }
 
 window#waybar {
@@ -139,8 +139,10 @@ button:hover {
     background-color: #f53c3c;
     color: #ffffff;
     animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: steps(12);
+    /* animation-duration: 0.5s; */
+    animation-duration: 3s;
+    /* animation-timing-function: steps(12); */
+    animation-timing-function: steps(1);
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }

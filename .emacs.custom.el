@@ -57,8 +57,6 @@
    '(dtrt-indent-global-mode gtags-mode whitespace-mode
                              delete-trailing-whitespace-mode))
  '(ring-bell-function 'ignore)
- '(savehist-additional-variables
-   '(extended-command-history compile-command-history search-ring))
  '(savehist-mode t)
  '(show-paren-mode t)
  '(tab-width 4)

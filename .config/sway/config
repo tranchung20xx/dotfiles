@@ -29,7 +29,7 @@ seat seat0 xcursor_theme Adwaita 35
 exec --no-startup-id foot --server
 
 ### Output configuration
-output "*" bg ~/.config/wallpaper/joline2.png fill subpixel rgb adaptive_sync on
+output "*" bg ~/.config/wallpaper/joline2.png fill subpixel rgb adaptive_sync on scale 1
 
 ### Key bindings
 #
@@ -187,32 +187,22 @@ for_window [app_id="Chromium-browser"] mark Browser
 for_window [app_id="brave-browser"] mark Browser
 for_window [app_id="firefox"] mark Browser
 
-for_window [con_mark="Browser"] {
-    inhibit_idle fullscreen
-}
+for_window [con_mark="Browser"] inhibit_idle fullscreen
 
-for_window [app_id="firefox" title="Firefox — Sharing Indicator"] {
-    floating enable
-}
+for_window [app_id="firefox" title="Firefox — Sharing Indicator"] floating enable
+
 
 ################################################################
 # 50-rules-pavucontrol.conf
-for_window [app_id="pavucontrol"] {
-    floating enable
-    move position center
-}
+for_window [app_id="pavucontrol"] floating enable
 
-for_window [app_id="pavucontrol-qt"] {
-    floating enable
-    move position center
-}
+
+for_window [app_id="pavucontrol-qt"] floating enable
+
 
 ################################################################
 # 50-rules-policykit-agent.conf
-for_window [app_id="lxqt-policykit-agent"] {
-    floating enable
-    move position center
-}
+for_window [app_id="lxqt-policykit-agent"] floating enable
 
 ################################################################
 # 50-systemd-user.conf
@@ -336,8 +326,8 @@ input type:pointer {
 # ==========================================
 # 1. GLOBAL ROLES (X11/XWayland & Compliant Apps)
 # ==========================================
-for_window [window_role="^(pop-up|task_dialog|dialog|utility|Preferences|About|Open|Save|Properties|Confirmation|Print|Page Setup|File Operation Progress)$"] floating enable move position center
-for_window [window_role="(?i).*(picker|chooser|selector).*"] floating enable, move position center
+for_window [window_role="^(pop-up|task_dialog|dialog|utility|Preferences|About|Open|Save|Properties|Confirmation|Print|Page Setup|File peration Progress)$"] floating enable
+for_window [window_role="(?i).*(picker|chooser|selector).*"] floating enable
 
 # Target all auxiliary Thunar windows while keeping the main window tiled
 for_window [app_id="thunar" title=".*Progress.*"] floating enable
@@ -385,7 +375,7 @@ exec LT="$lock_timeout" ST="$screen_timeout" LT=${LT:-300} ST=${ST:-60} && \
 ################################################################
 # 95-pic-in-picture.conf
 # Picture in picture setting for swaywm
-for_window [title="Picture-in-Picture"] floating enable, sticky enable, move position center
+for_window [title="Picture-in-Picture"] floating enable, sticky enable
 for_window [window_role="PictureInPicture"] floating enable, sticky enable
 
 ################################################################

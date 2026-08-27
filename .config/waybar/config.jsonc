@@ -3,7 +3,7 @@
     "output": "eDP-1",
     // "layer": "top", // Waybar at top layer
     "position": "bottom", // Waybar position (top|bottom|left|right)
-    // "height": 30, // Waybar height (to be removed for auto height)
+    "height": 36, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
@@ -25,13 +25,13 @@
         "memory",
         "temperature",
         "backlight",
-        "sway/language",
+        // "sway/language",
         "battery",
         "clock"
     ],
     // Modules configuration
     "sway/workspaces": {
-    //     "disable-scroll": true,
+           "disable-scroll": true,
            "all-outputs": true,
     //     "warp-on-scroll": false,
            "format": "{name}"
@@ -56,13 +56,14 @@
         }
     },
     "sway/window": {
-	"max-length": 60
+        "max-length": 60
     },
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
     "sway/scratchpad": {
-        "format": "{icon} {count}",
+        "format": "Krothefti: {count}",
+        // "format": "{icon} {count}",
         "show-empty": false,
         "format-icons": ["", ""],
         "tooltip": true,
@@ -85,6 +86,7 @@
     },
     "clock": {
         // "timezone": "America/New_York",
+        "interval": 60,
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
