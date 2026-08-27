@@ -38,12 +38,18 @@
 (add-hook 'minibuffer-setup-hook #'my/mb-setup)
 
 ;;; Custom face for fido-mode
+(defgroup my-icomplete-faces nil
+  "Faces for custom icomplete/fido highlighting."
+  :group 'icomplete)
+
 (defface icomplete-dir
   '((t :inherit font-lock-keyword-face))
-  "Face for directory entries in icomplete.")
+  "Face for directory entries in icomplete."
+  :group 'my-icomplete-faces)
 (defface icomplete-determined
   '((t :inherit shadow))
-  "Face for the determined (sole/bracketed) match in icomplete.")
+  "Face for the determined (sole/bracketed) match in icomplete."
+  :group 'my-icomplete-faces)
 (advice-add 'icomplete-completions :filter-return
             (lambda (s)
               (let* ((comps (completion-all-sorted-completions))
@@ -110,5 +116,8 @@
           nil t)))
     (unless (string-empty-p choice)
       (find-file (expand-file-name choice default-directory)))))
+
+(define-advice compilation-filter (:around (f proc string) xterm-color)
+  (funcall f proc (xterm-color-filter string)))
 
 (provide 'my-misc)

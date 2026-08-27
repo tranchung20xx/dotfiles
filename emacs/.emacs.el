@@ -17,13 +17,13 @@
 
 (setq-default inhibit-splash-screen t
               frame-inhibit-implied-resize t
+              read-process-output-max (* 1024 1024)
               frame-resize-pixelwise t
               window-resize-pixelwise t
               redisplay-dont-pause t
               redisplay-skip-fontification-on-input t
               inhibit-compacting-font-caches t
               bidi-inhibit-bpa t
-              ;; read-process-output-max (* 1024 1024)
               process-adaptive-read-buffering nil
               pgtk-wait-for-event-timeout 0)
 
@@ -76,11 +76,6 @@
   :ensure nil
   :hook (after-init . global-auto-revert-mode))
 
-(use-package savehist
-  :ensure nil
-  :hook (after-init . savehist-mode)
-  :custom (savehist-additional-variables '(kill-ring search-ring regexp-search-ring)))
-
 (use-package so-long
   :ensure nil
   :hook (after-init . global-so-long-mode))
@@ -101,9 +96,17 @@
   :ensure nil
   :bind ("M-C-g" . recompile)
   :config
+  ;; (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
   (add-to-list 'compilation-error-regexp-alist
-               '("\\([^()\n]+\\)(\\([0-9]+\\)\\(,\\([0-9]+\\)\\)?) \\(Warning:\\)?" 1 2 (4) (5)))
-  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter))
+               '("\\([^()\n]+\\)(\\([0-9]+\\)\\(,\\([0-9]+\\)\\)?) \\(Warning:\\)?" 1 2 (4) (5))))
+
+(use-package xterm-color
+  :after compile
+  :config
+  (define-advice compilation-filter (:around (f proc string) xterm-color)
+    (funcall f proc (xterm-color-filter string)))
+  :custom
+  (compilation-environment '("TERM=xterm-256color")))
 
 (use-package whitespace
   :ensure nil
@@ -114,11 +117,7 @@
 
 (use-package icomplete
   :ensure nil
-  :hook (after-init . fido-mode)
-  :config
-  (add-hook 'icomplete-minibuffer-setup-hook
-            (lambda ()
-              (setq-local completion-styles '(substring partial-completion)))))
+  :hook (after-init . fido-mode))
 
 (when (file-directory-p "~/.emacs.local/")
   (use-package gruber-darker-theme
@@ -159,22 +158,28 @@
 (use-package gtags-mode
   :defer t
   :custom (gtags-mode-lighter " gtags")
-  :hook (prog-mode . gtags-mode))
+  :hook (prog-mode . gtags-mode)
+  :config
+  (setenv "GTAGSLABEL" "native-pygments")
+  (setenv "GTAGSCONF" "/usr/share/gtags/gtags.conf"))
 
 (use-package dtrt-indent
   :defer t
   :custom (dtrt-indent-lighter "")
   :hook (prog-mode . dtrt-indent-global-mode))
 
-(use-package d-mode        :defer t)
-(use-package lua-mode      :defer t)
-(use-package rust-mode     :defer t)
-(use-package cmake-mode    :defer t)
-(use-package meson-mode    :defer t)
-(use-package markdown-mode :defer t)
-(use-package yaml-mode     :defer t)
-(use-package qml-mode      :defer t)
-(use-package json-mode     :defer t)
+(use-package d-mode          :defer t)
+(use-package go-mode         :defer t)
+(use-package lua-mode        :defer t)
+(use-package rust-mode       :defer t)
+(use-package cmake-mode      :defer t)
+(use-package meson-mode      :defer t)
+(use-package markdown-mode   :defer t)
+(use-package yaml-mode       :defer t)
+(use-package qml-mode        :defer t)
+(use-package json-mode       :defer t)
+(use-package ninja-mode      :defer t)
+(use-package typescript-mode :defer t)
 
 (when (file-directory-p "~/.emacs.local/")
   (use-package my-misc
