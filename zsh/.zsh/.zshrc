@@ -14,6 +14,9 @@
 # Remove older command from the history if a duplicate is to be added.
 setopt HIST_IGNORE_ALL_DUPS
 
+autoload -U select-word-style
+select-word-style bash
+
 #
 # Input/output
 #
@@ -109,23 +112,29 @@ source ${ZIM_HOME}/init.zsh
 export PATH="$HOME/.local/bin:$PATH"
 
 # export PS1="%B%{$(tput setaf 226)%}[%n%{$(tput setaf 214)%}@%{$(tput setaf 219)%}%m %{$(tput setaf 227)%}%~]%{$(tput sgr0)%}$%b "
+#
 
+autoload -Uz add-zsh-hook
+zstyle ':zim:git-info:branch' format '(%b)'
+zstyle ':zim:git-info:dirty'  format '*'
+zstyle ':zim:git-info:indexed'   format '+'
+zstyle ':zim:git-info:unindexed' format '*'
+# Assemble what shows up in the prompt.
+# Matches your old behavior exactly (branch only):
+zstyle ':zim:git-info:keys' format 'prompt' ' %b'
+# --- If you actually want staged(+)/unstaged(*) markers like the
+#     zstyle names implied, use this instead (needs verbose mode
+#     for indexed/unindexed counts):
+# zstyle ':zim:git-info' verbose yes
+# zstyle ':zim:git-info:keys' format 'prompt' ' (%b%i%I)'
+add-zsh-hook precmd git-info
 prompt_suse_setup () {
-  # Gruber Darker Hex Colors
-  local gd_yellow="#ffdd33"
-  local gd_blue="#96a6c8"
-  local gd_green="#73c936"
-  local gd_red="#cc3333"
-
-  local user_color="%(#.%F{${gd_red}}.%F{${gd_yellow}})"
-
-  local host_color="%F{${gd_green}}"
-  local dir_color="%F{${gd_blue}}"
-
-  PS1="%B${user_color}%n%f%b@%B${host_color}%m%f%b:%B${dir_color}%~%f%b/ > "
+  local user_color="%(#.%F{red}.%F{yellow})"
+  local host_color="%F{green}"
+  local dir_color="%F{blue}"
+  local git_color="%F{yellow}"   # see note below on 8-color limits
+  PS1="%B${user_color}%n%f%b@%B${host_color}%m%f%b:%B${dir_color}%~%f%b%B${git_color}\${(e)git_info[prompt]}%f%b > "
   PS2="%B${user_color}>%f%b "
-
   prompt_opts=( cr percent )
 }
-
 prompt_suse_setup "$@"

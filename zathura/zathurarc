@@ -251,3 +251,6 @@ set recolor-lightcolor          "rgba(0,0,0,1)"        # pure black document bac
 set recolor-darkcolor           "rgba(255,255,255,1)"  # pure white document text
 set recolor                     "true"
 set recolor-keephue             "true"                 # keep original color for images/links
+
+set highlight-color             "rgba(217,119,6,0.4)"   # Màu cam/vàng hổ phách mờ 40% (giữ chữ trắng bên dưới dễ đọc)
+set highlight-active-color      "rgba(245,158,11,0.6)"  # Màu vàng sáng hơn khi kích hoạt
