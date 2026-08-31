@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: struct
-# key: struct
-# --
-typedef struct {
-        $0
-} $1;

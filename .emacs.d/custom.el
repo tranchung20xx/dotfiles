@@ -1,12 +1,15 @@
-;; -*- lexical-binding: t; -*-
+;;; -*- lexical-binding: t -*-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auto-revert-verbose nil)
+ '(auto-save-list-file-prefix "~/.emacs.d/user/auto-save-list/.saves-")
  '(backup-directory-alist '(("." . "~/.emacs.d/backups/")))
  '(c-basic-offset 4)
+ '(c-ts-indent-offset 4)
+ '(c-ts-mode-enable-doxygen t)
  '(column-number-mode t)
  '(company-dabbrev-code-everywhere t)
  '(company-dabbrev-code-ignore-case t)
@@ -44,18 +47,18 @@
  '(icomplete-compute-delay 0)
  '(indent-tabs-mode nil)
  '(make-backup-files nil)
+ '(minibuffer-electric-default-mode t)
  '(package-selected-packages
-   '(clang-format cmake-mode company csharp-mode d-mode dictionary
-                  dtrt-indent editorconfig elixir-ts-mode faceup
-                  go-mode gtags-mode json-mode less-css-mode lua-mode
-                  magit markdown-mode markdown-ts-mode meson-mode
-                  move-text multiple-cursors ninja-mode org paxedit
-                  peg qml-mode rust-mode timeout tramp typescript-mode
-                  verilog-mode wallpaper which-key xterm-color
-                  yaml-mode yasnippet))
- '(prog-mode-hook
-   '(dtrt-indent-global-mode gtags-mode whitespace-mode
-                             delete-trailing-whitespace-mode))
+   '(clang-format cmake-mode company company-shell cperl-mode csharp-mode
+                  d-mode dictionary dtrt-indent editorconfig
+                  elixir-ts-mode faceup go-mode gtags-mode
+                  heex-ts-mode json-mode less-css-mode lua-mode magit
+                  mardown-ts-mode markdown-mode markdown-ts-mode
+                  meson-mode move-text multiple-cursors ninja-mode org
+                  paredit paxedit peg qml-mode rust-mode timeout tramp
+                  transient typescript-mode verilog-mode wallpaper
+                  which-key xterm-color yaml-mode yasnippet))
+ '(prog-mode-hook '(whitespace-mode delete-trailing-whitespace-mode))
  '(ring-bell-function 'ignore)
  '(savehist-mode t)
  '(show-paren-mode t)
@@ -65,7 +68,7 @@
  '(truncate-lines t)
  '(use-short-answers t)
  '(windmove-default-keybindings '(nil shift))
- '(yas-snippet-dirs '("~/.emacs.snippets/")))
+ '(yas-snippet-dirs '("/home/chung/.emacs.d/snippets")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

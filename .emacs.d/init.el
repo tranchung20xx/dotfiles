@@ -1,40 +1,6 @@
-;;; This config based-on Tsoding emacs config  -*- lexical-binding: t; -*-
+;;; init.el --- Main initialization  -*- lexical-binding: t; -*-
+;;  This config based-on Tsoding emacs config
 ;;  https://github.com/rexim/dotfiles
-
-(defvar default-file-name-handler-alist file-name-handler-alist)
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 1
-      file-name-handler-alist nil)
-
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq gc-cons-threshold (* 64 1024 1024)
-                  gc-cons-percentage 0.2
-                  file-name-handler-alist default-file-name-handler-alist)))
-
-(setq load-prefer-newer t)
-(setq confirm-kill-processes nil)
-
-(setq-default inhibit-splash-screen t
-              frame-inhibit-implied-resize t
-              read-process-output-max (* 1024 1024)
-              frame-resize-pixelwise t
-              window-resize-pixelwise t
-              redisplay-dont-pause t
-              redisplay-skip-fontification-on-input t
-              inhibit-compacting-font-caches t
-              bidi-inhibit-bpa t
-              process-adaptive-read-buffering nil
-              pgtk-wait-for-event-timeout 0)
-
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-
-(unless package-archive-contents
-  (condition-case err
-      (package-refresh-contents)
-    (error (message "package-refresh-contents failed: %s" err))))
 
 (eval-when-compile (require 'use-package))
 (require 'use-package)
@@ -44,22 +10,19 @@
 
 (when (native-comp-available-p)
   (setq-default native-comp-async-report-warnings-errors 'silent
-                native-comp-compiler-options '("-O3" "-mtune=znver4" "-march=znver4" "-g0"
+                native-comp-compiler-options '("-O2" "-mtune=znver4" "-march=znver4" "-g0"
                                                "-fno-omit-frame-pointer" "-fno-finite-math-only")
-                native-comp-driver-options '("-Wl,-z,pack-relative-relocs" "-Wl,-O2" "-Wl,--as-needed")
+                native-comp-driver-options   '("-Wl,-z,pack-relative-relocs" "-Wl,-O2" "-Wl,--as-needed")
                 package-native-compile t))
 
 (use-package emacs
   :ensure nil
   :custom
-  (custom-file (expand-file-name "~/.emacs.custom.el"))
+  (custom-file (expand-file-name "~/.emacs.d/custom.el"))
   (c-default-style '((java-mode . "java")
                      (awk-mode . "awk")
                      (other . "bsd")))
   :config
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
   (when (find-font (font-spec :name "Iosevka"))
     (add-to-list 'default-frame-alist '(font . "Iosevka 26")))
 
@@ -119,10 +82,10 @@
   :ensure nil
   :hook (after-init . fido-mode))
 
-(when (file-directory-p "~/.emacs.local/")
+(when (file-directory-p "~/.emacs.d/misc")
   (use-package gruber-darker-theme
     :ensure nil
-    :load-path "~/.emacs.local/"
+    :load-path "~/.emacs.d/misc"
     :config
     (load-theme 'gruber-darker t)))
 
@@ -138,12 +101,18 @@
          ("C-\""        . mc/skip-to-next-like-this)
          ("C-:"         . mc/skip-to-previous-like-this)))
 
-(use-package paxedit
+(use-package paredit
+  :defer t
   :hook ((emacs-lisp-mode lisp-mode common-lisp-mode clojure-mode scheme-mode racket-mode)
-         . paxedit-mode))
+         . paredit-mode))
 
 (use-package company
+  :defer t
   :hook (after-init . global-company-mode))
+
+(use-package company-shell
+  :config
+  (add-to-list 'company-backends '(company-shell company-shell-env company-fish-shell)))
 
 (use-package yasnippet
   :hook (after-init . yas-global-mode))
@@ -168,23 +137,23 @@
   :custom (dtrt-indent-lighter "")
   :hook (prog-mode . dtrt-indent-global-mode))
 
-(use-package d-mode          :defer t)
-(use-package go-mode         :defer t)
-(use-package lua-mode        :defer t)
-(use-package rust-mode       :defer t)
-(use-package cmake-mode      :defer t)
-(use-package meson-mode      :defer t)
-(use-package markdown-mode   :defer t)
-(use-package yaml-mode       :defer t)
-(use-package qml-mode        :defer t)
-(use-package json-mode       :defer t)
-(use-package ninja-mode      :defer t)
-(use-package typescript-mode :defer t)
+;; (use-package d-mode          :defer t)
+;; (use-package go-mode         :defer t)
+;; (use-package lua-mode        :defer t)
+;; (use-package rust-mode       :defer t)
+;; (use-package cmake-mode      :defer t)
+;; (use-package meson-mode      :defer t)
+;; (use-package markdown-mode   :defer t)
+;; (use-package yaml-mode       :defer t)
+;; (use-package qml-mode        :defer t)
+;; (use-package json-mode       :defer t)
+;; (use-package ninja-mode      :defer t)
+;; (use-package typescript-mode :defer t)
 
-(when (file-directory-p "~/.emacs.local/")
+(when (file-directory-p "~/.emacs.d/misc")
   (use-package my-misc
     :ensure nil
-    :load-path "~/.emacs.local/"))
+    :load-path "~/.emacs.d/misc"))
 
-(provide '.emacs)
-;;; .emacs.el ends here
+(provide 'init)
+;;; init.el ends here

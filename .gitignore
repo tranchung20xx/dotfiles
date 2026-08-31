@@ -1,4 +1,2 @@
-nvim/lazy-lock.json
-emacs/.emacs.d/
-sway/assign-cgroups-rs/target/
-emacs/.emacs.local/*.elc
+.emacs.d/user
+.emacs.d/elpa

@@ -117,6 +117,7 @@
     (unless (string-empty-p choice)
       (find-file (expand-file-name choice default-directory)))))
 
+(require 'xterm-color)
 (define-advice compilation-filter (:around (f proc string) xterm-color)
   (funcall f proc (xterm-color-filter string)))
 
