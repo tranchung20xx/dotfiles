@@ -2,81 +2,53 @@
 ;;  This config based-on Tsoding emacs config
 ;;  https://github.com/rexim/dotfiles
 
-(eval-when-compile (require 'use-package))
-(require 'use-package)
-
-(setq use-package-always-ensure t
-      package-install-upgrade-built-in t)
-
 (when (native-comp-available-p)
-  (setq-default native-comp-async-report-warnings-errors 'silent
-                native-comp-compiler-options '("-O2" "-mtune=znver4" "-march=znver4" "-g0"
-                                               "-fno-omit-frame-pointer" "-fno-finite-math-only")
-                native-comp-driver-options   '("-Wl,-z,pack-relative-relocs" "-Wl,-O2" "-Wl,--as-needed")
-                package-native-compile t))
+  (setq native-comp-async-report-warnings-errors 'silent
+        native-comp-compiler-options '("-O2" "-mtune=znver4" "-march=znver4" "-g0" "-fno-omit-frame-pointer")
+        native-comp-driver-options   '("-Wl,-z,pack-relative-relocs" "-Wl,-O2" "-Wl,--as-needed")
+        package-native-compile t))
 
 (use-package emacs
   :ensure nil
-  :custom
-  (custom-file (expand-file-name "~/.emacs.d/custom.el"))
-  (c-default-style '((java-mode . "java")
-                     (awk-mode . "awk")
-                     (other . "bsd")))
   :config
-  (when (find-font (font-spec :name "Iosevka"))
-    (add-to-list 'default-frame-alist '(font . "Iosevka 26")))
-
-  (add-hook 'before-save-hook #'delete-trailing-whitespace)
-
-  (when (file-exists-p custom-file)
-    (load custom-file 'noerror 'nomessage))
+  (add-to-list 'default-frame-alist '(font . "Iosevka 26"))
 
   :bind
   (("C-," . duplicate-dwim)
-   ("C-x C-g" . find-file-at-point)))
+   ("C-x C-g" . find-file-at-point))
+
+  :custom
+  (gc-cons-threshold (* 32 1024 1024))
+  (gc-cons-percentage 0.1)
+  (file-name-handler-alist sane--file-name-handler-alist))
 
 (use-package autorevert
-  :ensure nil
-  :hook (after-init . global-auto-revert-mode))
+  :ensure nil)
 
 (use-package so-long
-  :ensure nil
-  :hook (after-init . global-so-long-mode))
+  :ensure nil)
 
 (use-package dired
-  :ensure nil
-  :custom
-  (dired-dwim-target t)
-  (dired-listing-switches "-alhv")
-  (dired-mouse-drag-files t))
+  :ensure nil)
 
 (use-package dired-x
-  :ensure nil
-  :config
-  (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$")))
+  :ensure nil)
 
 (use-package compile
   :ensure nil
   :bind ("M-C-g" . recompile)
   :config
-  ;; (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
   (add-to-list 'compilation-error-regexp-alist
                '("\\([^()\n]+\\)(\\([0-9]+\\)\\(,\\([0-9]+\\)\\)?) \\(Warning:\\)?" 1 2 (4) (5))))
 
 (use-package xterm-color
   :after compile
   :config
-  (define-advice compilation-filter (:around (f proc string) xterm-color)
-    (funcall f proc (xterm-color-filter string)))
   :custom
   (compilation-environment '("TERM=xterm-256color")))
 
 (use-package whitespace
-  :ensure nil
-  :hook ((prog-mode text-mode) . whitespace-mode)
-  :custom
-  (whitespace-style '(face tabs spaces trailing space-before-tab newline
-                           indentation empty space-after-tab space-mark tab-mark)))
+  :ensure nil)
 
 (use-package icomplete
   :ensure nil
@@ -108,21 +80,23 @@
 
 (use-package company
   :defer t
-  :hook (after-init . global-company-mode))
+  :custom
+  (global-company-mode t))
 
 (use-package company-shell
   :config
   (add-to-list 'company-backends '(company-shell company-shell-env company-fish-shell)))
 
 (use-package yasnippet
-  :hook (after-init . yas-global-mode))
+  :hook (after-init . yas-global-mode)
+  :custom
+  (yas-snippet-dirs `(,(expand-file-name "~/.emacs.d/snippets"))))
 
 (use-package transient :defer t)
 (use-package magit :defer t)
 
 (use-package editorconfig
-  :ensure nil
-  :hook (after-init . editorconfig-mode))
+  :ensure nil)
 
 (use-package gtags-mode
   :defer t

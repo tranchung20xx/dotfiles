@@ -18,8 +18,9 @@
  '(company-dabbrev-ignore-case nil)
  '(compilation-always-kill t)
  '(compilation-scroll-output t)
- '(completion-styles '(basic emacs22 flex))
+ '(completion-styles '(flex))
  '(confirm-kill-emacs 'y-or-n-p)
+ '(confirm-kill-processes nil)
  '(create-lockfiles nil)
  '(custom-safe-themes
    '("71db67ea6e739968ca6d8a6d16cf86afd7dda23d129c8eeec98077f66a13d637"
@@ -30,7 +31,10 @@
  '(dired-clean-confirm-killing-deleted-buffers nil)
  '(dired-copy-dereference t)
  '(dired-do-revert-buffer t)
+ '(dired-dwim-target t)
  '(dired-kill-when-opening-new-dired-buffer t)
+ '(dired-listing-switches "-alhv" nil nil "Customized with use-package dired")
+ '(dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'\\|^\\..+$")
  '(dired-recursive-copies 'always)
  '(disabled-command-function 'ignore t)
  '(display-line-numbers-type 'relative)
@@ -43,32 +47,33 @@
  '(global-auto-revert-non-file-buffers t)
  '(global-display-line-numbers-mode t)
  '(global-eldoc-mode nil)
+ '(global-so-long-mode t)
  '(grep-find-command '("rg --no-heading --color=never -nSe ''" . 37))
  '(icomplete-compute-delay 0)
  '(indent-tabs-mode nil)
  '(make-backup-files nil)
  '(minibuffer-electric-default-mode t)
  '(package-selected-packages
-   '(clang-format cmake-mode company company-shell cperl-mode csharp-mode
-                  d-mode dictionary dtrt-indent editorconfig
-                  elixir-ts-mode faceup go-mode gtags-mode
-                  heex-ts-mode json-mode less-css-mode lua-mode magit
-                  mardown-ts-mode markdown-mode markdown-ts-mode
-                  meson-mode move-text multiple-cursors ninja-mode org
-                  paredit paxedit peg qml-mode rust-mode timeout tramp
-                  transient typescript-mode verilog-mode wallpaper
-                  which-key xterm-color yaml-mode yasnippet))
+   '(company company-shell cperl-mode csharp-mode dictionary dtrt-indent
+             editorconfig elixir-ts-mode faceup gtags-mode
+             less-css-mode lua-mode magit markdown-ts-mode move-text
+             multiple-cursors org paredit peg timeout tramp transient
+             verilog-mode wallpaper which-key xterm-color yasnippet))
  '(prog-mode-hook '(whitespace-mode delete-trailing-whitespace-mode))
  '(ring-bell-function 'ignore)
- '(savehist-mode t)
  '(show-paren-mode t)
  '(tab-width 4)
+ '(text-mode-hook
+   '(whitespace-mode text-mode-hook-identify
+                     delete-trailing-whitespace-mode))
  '(treesit-enabled-modes t)
  '(treesit-font-lock-level 2)
  '(truncate-lines t)
+ '(use-package-always-ensure t)
  '(use-short-answers t)
- '(windmove-default-keybindings '(nil shift))
- '(yas-snippet-dirs '("/home/chung/.emacs.d/snippets")))
+ '(whitespace-style
+   '(face trailing tabs spaces newline empty indentation space-after-tab
+          space-before-tab space-mark tab-mark)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
