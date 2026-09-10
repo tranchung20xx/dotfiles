@@ -4,12 +4,13 @@
 
 ;; Defer GC during startup
 
+(setq user-emacs-directory "~/.emacs.d/user")
+
 (defvar sane--file-name-handler-alist file-name-handler-alist)
 (setq gc-cons-threshold (* 128 1024 1024)
       gc-cons-percentage 1
       file-name-handler-alist nil)
 
-(setq-default user-emacs-directory "~/.emacs.d/user")
 (setq custom-file (expand-file-name "~/.emacs.d/custom.el"))
 
 (setq inhibit-splash-screen t

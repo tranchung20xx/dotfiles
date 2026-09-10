@@ -2,11 +2,10 @@
 ;;  This config based-on Tsoding emacs config
 ;;  https://github.com/rexim/dotfiles
 
-(when (native-comp-available-p)
-  (setq native-comp-async-report-warnings-errors 'silent
+(setq native-comp-async-report-warnings-errors 'silent
         native-comp-compiler-options '("-O2" "-mtune=znver4" "-march=znver4" "-g0" "-fno-omit-frame-pointer")
         native-comp-driver-options   '("-Wl,-z,pack-relative-relocs" "-Wl,-O2" "-Wl,--as-needed")
-        package-native-compile t))
+        package-native-compile t)
 
 (use-package emacs
   :ensure nil

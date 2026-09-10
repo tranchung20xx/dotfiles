@@ -21,7 +21,7 @@ set $term footclient
 # Your preferred application launcher
 set $menu fuzzel
 
-font pango:Iosevka 18
+font pango:Iosevka 17
 focus_follows_mouse no
 hide_edge_borders both
 seat seat0 xcursor_theme Adwaita 35
@@ -319,6 +319,16 @@ input type:pointer {
     # pointer_accel 0
 }
 
+input type:tablet_tool {
+    # center align 4:3 tablet to 16:10 screen
+    map_from_region 0x0.0833 1x0.9167
+}
+
+# xp pen gs403 star
+input "10429:2323:Hanvon_ugee_4_inch_PenTablet_Pen" {
+    left_handed enabled
+}
+
 ################################################################
 # 81-float-this-window.conf
 ### tOTALLY ai sLops
@@ -336,12 +346,9 @@ for_window [app_id="thunar" title=".*Error.*"] floating enable
 for_window [app_id="thunar" title="^Properties$"] floating enable
 for_window [app_id="thunar" window_role="thunar-preferences"] floating enable
 
+for_window [app_id="localsend"] floating enable
+
 for_window [window_role="^(plugin-window|toolbox|color_chooser|file_chooser)$"] floating enable
-
-# ==========================================
-# 2. APPLICATION-SPECIFIC ROLES
-# ==========================================
-
 
 ################################################################
 # 90-bar.conf

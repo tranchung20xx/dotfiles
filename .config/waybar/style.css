@@ -1,11 +1,11 @@
 * {
-    font-family: 'Iosevka', 'Noto Sans Mono', 'Font Awesome 7 Free', 'Noto Color Emoji', monospace;
-    font-size: 25px;
+    font-family: 'Iosevka', 'Symbols Nerd Font Mono', 'Noto Sans Mono', 'Font Awesome', 'Noto Color Emoji', monospace;
+    font-size: 26px;
 }
 
 window#waybar {
     /* background-color: rgba(0, 0, 0, 0.4); */
-    background-color: rgb(40, 85, 119); 
+    background-color: rgb(40, 85, 119);
     /* border-bottom: 3px solid rgba(0, 0, 0, 0.2); */
     color: #ffffff;
     /* transition-property: background-color; */
