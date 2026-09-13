@@ -5,8 +5,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auto-revert-verbose nil)
- '(auto-save-list-file-prefix "~/.emacs.d/user/auto-save-list/.saves-")
- '(backup-directory-alist '(("." . "~/.emacs.d/backups/")))
+ '(auto-save-list-file-prefix "/tmp")
  '(c-basic-offset 4)
  '(c-ts-indent-offset 4)
  '(c-ts-mode-enable-doxygen t)
@@ -53,23 +52,14 @@
  '(indent-tabs-mode nil)
  '(make-backup-files nil)
  '(minibuffer-electric-default-mode t)
- '(package-selected-packages
-   '(company company-shell cperl-mode csharp-mode dictionary dtrt-indent
-             editorconfig elixir-ts-mode faceup gtags-mode
-             less-css-mode lua-mode magit markdown-ts-mode move-text
-             multiple-cursors org paredit peg timeout tramp transient
-             verilog-mode wallpaper which-key xterm-color yasnippet))
- '(prog-mode-hook '(whitespace-mode delete-trailing-whitespace-mode))
+ '(package-selected-packages nil)
+ '(prog-mode-hook '(whitespace-mode))
  '(ring-bell-function 'ignore)
  '(show-paren-mode t)
  '(tab-width 4)
- '(text-mode-hook
-   '(whitespace-mode text-mode-hook-identify
-                     delete-trailing-whitespace-mode))
+ '(text-mode-hook '(whitespace-mode text-mode-hook-identify))
  '(treesit-enabled-modes t)
  '(treesit-font-lock-level 2)
- '(truncate-lines t)
- '(use-package-always-ensure t)
  '(use-short-answers t)
  '(whitespace-style
    '(face trailing tabs spaces newline empty indentation space-after-tab

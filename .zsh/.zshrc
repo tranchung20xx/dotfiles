@@ -114,27 +114,4 @@ export PATH="$HOME/.local/bin:$PATH"
 # export PS1="%B%{$(tput setaf 226)%}[%n%{$(tput setaf 214)%}@%{$(tput setaf 219)%}%m %{$(tput setaf 227)%}%~]%{$(tput sgr0)%}$%b "
 #
 
-autoload -Uz add-zsh-hook
-zstyle ':zim:git-info:branch' format '(%b)'
-zstyle ':zim:git-info:dirty'  format '*'
-zstyle ':zim:git-info:indexed'   format '+'
-zstyle ':zim:git-info:unindexed' format '*'
-# Assemble what shows up in the prompt.
-# Matches your old behavior exactly (branch only):
-zstyle ':zim:git-info:keys' format 'prompt' ' %b'
-# --- If you actually want staged(+)/unstaged(*) markers like the
-#     zstyle names implied, use this instead (needs verbose mode
-#     for indexed/unindexed counts):
-# zstyle ':zim:git-info' verbose yes
-# zstyle ':zim:git-info:keys' format 'prompt' ' (%b%i%I)'
-add-zsh-hook precmd git-info
-prompt_suse_setup () {
-  local user_color="%(#.%F{red}.%F{yellow})"
-  local host_color="%F{green}"
-  local dir_color="%F{blue}"
-  local git_color="%F{yellow}"   # see note below on 8-color limits
-  PS1="%B${user_color}%n%f%b@%B${host_color}%m%f%b:%B${dir_color}%~%f%b%B${git_color}\${(e)git_info[prompt]}%f%b > "
-  PS2="%B${user_color}>%f%b "
-  prompt_opts=( cr percent )
-}
-prompt_suse_setup "$@"
+PROMPT='%n@%m:%~%(!.#.$) '

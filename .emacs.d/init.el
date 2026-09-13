@@ -16,10 +16,12 @@
   (("C-," . duplicate-dwim)
    ("C-x C-g" . find-file-at-point))
 
-  :custom
-  (gc-cons-threshold (* 32 1024 1024))
-  (gc-cons-percentage 0.1)
-  (file-name-handler-alist sane--file-name-handler-alist))
+  :hook
+  (before-save . delete-trailing-whitespace)
+  (emacs-startup . (lambda ()
+                     (setq gc-cons-threshold (* 32 1024 1024)
+                           gc-cons-percentage 0.1
+                           file-name-handler-alist sane--file-name-handler-alist))))
 
 (use-package autorevert
   :ensure nil)
@@ -110,23 +112,25 @@
   :custom (dtrt-indent-lighter "")
   :hook (prog-mode . dtrt-indent-global-mode))
 
-;; (use-package d-mode          :defer t)
-;; (use-package go-mode         :defer t)
-;; (use-package lua-mode        :defer t)
-;; (use-package rust-mode       :defer t)
-;; (use-package cmake-mode      :defer t)
-;; (use-package meson-mode      :defer t)
-;; (use-package markdown-mode   :defer t)
-;; (use-package yaml-mode       :defer t)
-;; (use-package qml-mode        :defer t)
-;; (use-package json-mode       :defer t)
-;; (use-package ninja-mode      :defer t)
-;; (use-package typescript-mode :defer t)
+(use-package d-mode          :defer t)
+(use-package go-mode         :defer t)
+(use-package lua-mode        :defer t)
+(use-package rust-mode       :defer t)
+(use-package cmake-mode      :defer t)
+(use-package meson-mode      :defer t)
+(use-package markdown-mode   :defer t)
+(use-package yaml-mode       :defer t)
+(use-package qml-mode        :defer t)
+(use-package json-mode       :defer t)
+(use-package ninja-mode      :defer t)
+(use-package typescript-mode :defer t)
 
 (when (file-directory-p "~/.emacs.d/misc")
   (use-package my-misc
     :ensure nil
     :load-path "~/.emacs.d/misc"))
+
+(load custom-file)
 
 (provide 'init)
 ;;; init.el ends here

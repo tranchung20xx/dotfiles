@@ -112,13 +112,13 @@
   (let ((choice
          (completing-read
           "Find file: "
-          (process-lines "fd" "--type" "f" "--hidden" "--exclude" ".git" "--color=never" "--strip-cwd-prefix")
+          (process-lines "fdfind" "--type" "f" "--hidden" "--exclude" ".git" "--color=never" "--strip-cwd-prefix")
           nil t)))
     (unless (string-empty-p choice)
       (find-file (expand-file-name choice default-directory)))))
 
-(require 'xterm-color)
-(define-advice compilation-filter (:around (f proc string) xterm-color)
-  (funcall f proc (xterm-color-filter string)))
+(with-eval-after-load 'compile
+  (define-advice compilation-filter (:around (f proc string) xterm-color)
+    (funcall f proc (xterm-color-filter string))))
 
 (provide 'my-misc)

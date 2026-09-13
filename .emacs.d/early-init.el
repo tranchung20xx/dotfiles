@@ -4,45 +4,37 @@
 
 ;; Defer GC during startup
 
-(setq user-emacs-directory "~/.emacs.d/user")
-
 (defvar sane--file-name-handler-alist file-name-handler-alist)
 (setq gc-cons-threshold (* 128 1024 1024)
       gc-cons-percentage 1
       file-name-handler-alist nil)
 
-(setq custom-file (expand-file-name "~/.emacs.d/custom.el"))
+(setq user-emacs-directory "~/.emacs.d/user")
+(when (boundp 'native-comp-eln-load-path)
+  (add-to-list 'native-comp-eln-load-path
+               (expand-file-name "eln-cache/" user-emacs-directory)))
 
 (setq inhibit-splash-screen t
       redisplay-dont-pause t
       inhibit-startup-message t
-      frame-inhibit-implied-resize t
       read-process-output-max (* 1024 1024)
-      frame-resize-pixelwise t
-      window-resize-pixelwise t
-      redisplay-skip-fontification-on-input t
       inhibit-compacting-font-caches t
-      bidi-inhibit-bpa t
-      pgtk-wait-for-event-timeout 0
-      auto-window-vscroll nil
-      process-adaptive-read-buffering nil)
+      pgtk-wait-for-event-timeout 0)
 
-;; Strip UI chrome before the first frame is drawn to avoid startup
-;; flicker/resize (this is the main reason these three belong in
-;; early-init.el rather than init.el).
-(add-to-list 'default-frame-alist '(background-color . "#000000"))
-(add-to-list 'default-frame-alist '(foreground-color . "#ffffff"))
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-;; package.el bootstrap — needs to happen before init.el's use-package
-;; declarations run.
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-(load custom-file 'noerror)
+(setq custom-file (expand-file-name "~/.emacs.d/custom.el"))
+(setq use-package-always-ensure t)
+
+(add-to-list 'default-frame-alist '(background-color . "#181818"))
+(add-to-list 'default-frame-alist '(foreground-color . "#e4e4ef"))
+(add-to-list 'default-frame-alist '(font . "Iosevka 26"))
 
 (provide 'early-init)
 ;;; early-init.el ends here
