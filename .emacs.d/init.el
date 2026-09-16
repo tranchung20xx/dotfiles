@@ -3,7 +3,7 @@
 ;;  https://github.com/rexim/dotfiles
 
 (setq native-comp-async-report-warnings-errors 'silent
-        native-comp-compiler-options '("-O2" "-mtune=znver4" "-march=znver4" "-g0" "-fno-omit-frame-pointer")
+        native-comp-compiler-options '("-O3" "-mtune=znver4" "-march=znver4" "-g0" "-fno-omit-frame-pointer")
         native-comp-driver-options   '("-Wl,-z,pack-relative-relocs" "-Wl,-O2" "-Wl,--as-needed")
         package-native-compile t)
 
@@ -105,7 +105,7 @@
   :hook (prog-mode . gtags-mode)
   :config
   (setenv "GTAGSLABEL" "native-pygments")
-  (setenv "GTAGSCONF" "/usr/share/gtags/gtags.conf"))
+  (setenv "GTAGSCONF" "/etc/gtags.conf"))
 
 (use-package dtrt-indent
   :defer t
@@ -115,14 +115,14 @@
 (use-package d-mode          :defer t)
 (use-package go-mode         :defer t)
 (use-package lua-mode        :defer t)
+(use-package qml-mode        :defer t)
+(use-package yaml-mode       :defer t)
+(use-package json-mode       :defer t)
 (use-package rust-mode       :defer t)
 (use-package cmake-mode      :defer t)
 (use-package meson-mode      :defer t)
-(use-package markdown-mode   :defer t)
-(use-package yaml-mode       :defer t)
-(use-package qml-mode        :defer t)
-(use-package json-mode       :defer t)
 (use-package ninja-mode      :defer t)
+(use-package markdown-mode   :defer t)
 (use-package typescript-mode :defer t)
 
 (when (file-directory-p "~/.emacs.d/misc")

@@ -1,1 +1,1 @@
-swayimg.enable_overlay(false)
+swayimg.overlay = false                    -- window overlay mode

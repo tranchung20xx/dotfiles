@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: protected
-# key: protect
+# key: protected
 # expand-env: ((yas-also-auto-indent-first-line t))
 # --
 protected:

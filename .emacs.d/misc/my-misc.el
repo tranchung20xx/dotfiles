@@ -109,11 +109,17 @@
 (defun my/fd-find-file ()
   "Find a file beneath `default-directory' using fd."
   (interactive)
-  (let ((choice
-         (completing-read
-          "Find file: "
-          (process-lines "fdfind" "--type" "f" "--hidden" "--exclude" ".git" "--color=never" "--strip-cwd-prefix")
-          nil t)))
+  (unless (executable-find "fd")
+    (user-error "fd not found on PATH"))
+  (let* ((default-directory (or (and (fboundp 'project-root)
+                                      (when-let ((proj (project-current)))
+                                        (project-root proj)))
+                                 default-directory))
+         (choice (completing-read
+                  (format "Find file in %s: " default-directory)
+                  (process-lines "fd" "--type" "f" "--hidden" "--exclude" ".git"
+                                 "--color=never" "--strip-cwd-prefix")
+                  nil t)))
     (unless (string-empty-p choice)
       (find-file (expand-file-name choice default-directory)))))
 

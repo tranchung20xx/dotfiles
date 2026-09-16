@@ -9,14 +9,14 @@ window#waybar {
 }
 
 button {
-    box-shadow: inset 0 -3px transparent;
+    box-shadow: inset 0 -0.12em transparent;
     border: none;
     border-radius: 0;
 }
 
 button:hover {
     background: inherit;
-    box-shadow: inset 0 -3px #ffffff;
+    box-shadow: inset 0 -0.12em #ffffff;
 }
 
 #pulseaudio:hover {
@@ -24,7 +24,7 @@ button:hover {
 }
 
 #workspaces button {
-    padding: 0 5px;
+    padding: 0 0.2em;
     background-color: transparent;
     color: #ffffff;
 }
@@ -35,7 +35,7 @@ button:hover {
 
 #workspaces button.focused {
     background-color: #64727D;
-    box-shadow: inset 0 -3px #ffffff;
+    box-shadow: inset 0 -0.12em #ffffff;
 }
 
 #workspaces button.urgent {
@@ -44,7 +44,7 @@ button:hover {
 
 #mode {
     background-color: #64727D;
-    box-shadow: inset 0 -3px #ffffff;
+    box-shadow: inset 0 -0.12em #ffffff;
 }
 
 #clock,
@@ -64,13 +64,13 @@ button:hover {
 #scratchpad,
 #power-profiles-daemon,
 #mpd {
-    padding: 0 10px;
+    padding: 0 0.38em;
     color: #ffffff;
 }
 
 #window,
 #workspaces {
-    margin: 0 4px;
+    margin: 0 0.15em;
 }
 
 .modules-left > widget:first-child > #workspaces {
@@ -114,7 +114,8 @@ button:hover {
 }
 
 #power-profiles-daemon {
-    padding-right: 15px;
+    padding-right: 0.58em;
+    padding-left: 0.58em;
 }
 
 #power-profiles-daemon.performance {
@@ -183,7 +184,7 @@ label:focus {
 #custom-media {
     background-color: #66cc99;
     color: #2a5c45;
-    min-width: 100px;
+    min-width: 3.85em;
 }
 
 #temperature {
@@ -219,21 +220,21 @@ label:focus {
 #language {
     background: #00b093;
     color: #740864;
-    padding: 0 5px;
-    margin: 0 5px;
-    min-width: 16px;
+    padding: 0 0.2em;
+    margin: 0 0.2em;
+    min-width: 0.6em;
 }
 
 #keyboard-state {
     background: #97e1ad;
     color: #000000;
     padding: 0;
-    margin: 0 5px;
-    min-width: 16px;
+    margin: 0 0.2em;
+    min-width: 0.6em;
 }
 
 #keyboard-state > label {
-    padding: 0 5px;
+    padding: 0 0.2em;
 }
 
 #keyboard-state > label.locked {
@@ -253,7 +254,7 @@ label:focus {
 }
 
 #privacy-item {
-    padding: 0 5px;
+    padding: 0 0.2em;
     color: white;
 }
 

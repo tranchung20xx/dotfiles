@@ -21,6 +21,9 @@ set $term footclient
 # Your preferred application launcher
 set $menu fuzzel
 
+set $volume_step 2
+set $volume_limit 200
+
 font pango:Iosevka 17
 focus_follows_mouse no
 hide_edge_borders both
@@ -142,21 +145,6 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-
-################################################################
-# 10-dex-autostart.conf
-# exec dex --autostart --environment sway
-
-################################################################
-# 10-systemd-cgroups.conf
-# exec ~/.config/sway/assign-cgroups.py
-exec ~/.config/sway/assign-cgroups-rs/target/release/assign-cgroups
-
-################################################################
-# 10-systemd-session.conf
-exec ~/.config/sway/session.sh
-
-################################################################
 # 26-wlr-mirror-mode.conf
 # Screen mirroring setup for sway using wlr-mirror
 # Dependency: https://github.com/Ferdi265/wl-mirror
@@ -178,124 +166,6 @@ exec ~/.config/sway/session.sh
 # }
 # bindsym $mod+p mode "present"
 
-################################################################
-# 50-rules-browser.conf
-for_window [class="Chromium-browser"] mark Browser
-for_window [class="Brave-browser"] mark Browser
-for_window [class="firefox"]  mark Browser
-for_window [app_id="Chromium-browser"] mark Browser
-for_window [app_id="brave-browser"] mark Browser
-for_window [app_id="firefox"] mark Browser
-
-for_window [con_mark="Browser"] inhibit_idle fullscreen
-
-for_window [app_id="firefox" title="Firefox — Sharing Indicator"] floating enable
-
-
-################################################################
-# 50-rules-pavucontrol.conf
-for_window [app_id="pavucontrol"] floating enable
-
-
-for_window [app_id="pavucontrol-qt"] floating enable
-
-
-################################################################
-# 50-rules-policykit-agent.conf
-for_window [app_id="lxqt-policykit-agent"] floating enable
-
-################################################################
-# 50-systemd-user.conf
-# exec systemctl --user set-environment XDG_CURRENT_DESKTOP=sway
-# exec systemctl --user import-environment DISPLAY \
-#                                          SWAYSOCK \
-#                                          WAYLAND_DISPLAY \
-#                                          XDG_CURRENT_DESKTOP
-
-# exec hash dbus-update-activation-environment 2>/dev/null && \
-#      dbus-update-activation-environment --systemd DISPLAY \
-#                                                   SWAYSOCK \
-#                                                   XDG_CURRENT_DESKTOP=sway \
-#                                                   WAYLAND_DISPLAY
-
-################################################################
-# 60-bindings-brightness.conf
-# Key bindings for brightness control using `brightnessctl`.
-# Displays a notification with the current value if /usr/bin/notify-send is available
-#
-# Brightness increase/decrease step can be customized by setting the `$brightness_step`
-# variable to a numeric value before including the file.
-#
-# Requires:     brightnessctl >= 0.5.1-11
-# Recommends:   libnotify
-
-set $brightness_notification_cmd command -v notify-send >/dev/null && \
-        VALUE=$(brightnessctl -m | cut -d, -f4) && \
-        Notify-send -e -h string:x-canonical-private-synchronous:brightness \
-            -h "int:value:$VALUE" -t 800 "Brightness: ${VALUE}%"
-
-bindsym XF86MonBrightnessDown exec \
-        'STEP="$brightness_step" && brightnessctl -q set ${STEP:-5}%- && $brightness_notification_cmd'
-bindsym XF86MonBrightnessUp exec \
-        'STEP="$brightness_step" && brightnessctl -q set +${STEP:-5}% && $brightness_notification_cmd'
-
-################################################################
-# 60-bindings-media.conf
-bindsym --locked {
-    XF86AudioPlay       exec playerctl play-pause
-    XF86AudioStop       exec playerctl stop
-}
-
-bindsym {
-    XF86AudioForward    exec playerctl position +10
-    XF86AudioNext       exec playerctl next
-    XF86AudioPause      exec playerctl pause
-    XF86AudioPrev       exec playerctl previous
-    XF86AudioRewind     exec playerctl position -10
-}
-
-################################################################
-# 60-bindings-screenshot.conf
-bindsym {
-    Print       exec grimshot save output
-    Alt+Print   exec grimshot save active
-    Ctrl+Print  exec grimshot save area
-}
-
-################################################################
-# 60-bindings-volume.conf
-# Key bindings to control pipewire or pulseaudio volume with pactl.
-# Displays a notification with the current state if /usr/bin/notify-send is available
-#
-# Volume increase/decrease step can be customized by setting the `$volume_step`
-# variable to a numeric value before including the file.
-# Maximum volume boost level can be set with the `$volume_limit` variable.
-#
-# Requires:     pulseaudio-utils
-# Recommends:   libnotify
-
-set $volume_helper_cmd ~/.config/sway/volume-helper
-set $volume_step 2
-set $volume_limit 200
-
-# Allow volume controls even if the screen is locked
-bindsym --locked {
-    XF86AudioRaiseVolume exec \
-        $volume_helper_cmd --limit "$volume_limit" --increase "$volume_step"
-    XF86AudioLowerVolume exec \
-        $volume_helper_cmd --limit "$volume_limit" --decrease "$volume_step"
-    XF86AudioMute    exec pactl set-sink-mute @DEFAULT_SINK@ toggle && $volume_helper_cmd
-    XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-}
-
-################################################################
-# 65-mode-passthrough.conf
-mode "passthrough" {
-    bindsym $mod+Pause mode default
-}
-bindsym $mod+Pause mode "passthrough"
-
-################################################################
 # 69-input-settings.conf
 ### Input configuration
 #
@@ -326,20 +196,15 @@ input type:tablet_tool {
 
 # xp pen gs403 star
 input "10429:2323:Hanvon_ugee_4_inch_PenTablet_Pen" {
-    left_handed enabled
+    # left_handed enabled
 }
 
-################################################################
 # 81-float-this-window.conf
 ### tOTALLY ai sLops
 
-# ==========================================
-# 1. GLOBAL ROLES (X11/XWayland & Compliant Apps)
-# ==========================================
 for_window [window_role="^(pop-up|task_dialog|dialog|utility|Preferences|About|Open|Save|Properties|Confirmation|Print|Page Setup|File peration Progress)$"] floating enable
 for_window [window_role="(?i).*(picker|chooser|selector).*"] floating enable
 
-# Target all auxiliary Thunar windows while keeping the main window tiled
 for_window [app_id="thunar" title=".*Progress.*"] floating enable
 for_window [app_id="thunar" title=".*Confirm.*"] floating enable
 for_window [app_id="thunar" title=".*Error.*"] floating enable
@@ -350,54 +215,14 @@ for_window [app_id="localsend"] floating enable
 
 for_window [window_role="^(plugin-window|toolbox|color_chooser|file_chooser)$"] floating enable
 
-################################################################
-# 90-bar.conf
-bar {
-    swaybar_command waybar
-}
-
-################################################################
-# 90-swayidle.conf
-exec LT="$lock_timeout" ST="$screen_timeout" LT=${LT:-300} ST=${ST:-60} && \
-    swayidle -w \
-        timeout $LT 'swaylock -f' \
-        timeout $((LT + ST)) 'swaymsg "output * power off"' \
-                      resume 'swaymsg "output * power on"'  \
-        timeout $ST 'pgrep -xu "$USER" swaylock >/dev/null && swaymsg "output * power off"' \
-             resume 'pgrep -xu "$USER" swaylock >/dev/null && swaymsg "output * power on"'  \
-        before-sleep 'swaylock -f' \
-        lock 'swaylock -f' \
-        unlock 'pkill -xu "$USER" -SIGUSR1 swaylock'
-
-################################################################
-# 90-winehq.conf
-# Auto move wine window to scratchpad
-# for_window [app_id="^wine"] move scratchpad
-# for_window [title="^Wine.*"] move scratchpad
-
-################################################################
-# 95-autostart-policykit-agent.conf
-# exec /usr/bin/lxqt-policykit-agent
-
-################################################################
 # 95-pic-in-picture.conf
 # Picture in picture setting for swaywm
 for_window [title="Picture-in-Picture"] floating enable, sticky enable
 for_window [window_role="PictureInPicture"] floating enable, sticky enable
 
-################################################################
-# 95-xdg-desktop-autostart.conf
-exec ~/.config/sway/wait-sni-ready && \
-    systemctl --user start sway-xdg-autostart.target
-
-################################################################
-# 95-xdg-user-dirs.conf
-exec /usr/bin/xdg-user-dirs-update
-
-################################################################
 # 99-screenshot-mode.conf
 # Dependency: https://github.com/coffeeispower/woomer
-bindsym $mod+x exec woomer
+bindsym $mod+x exec ~/.local/bin/woomer
 
 set $screenshot_name $(date +%Y-%m-%d-%H-%M-%S)
 mode "screenshot" {
@@ -413,6 +238,5 @@ bindsym $mod+s mode "screenshot"
 
 ################################################################
 exec xhost +SI:localuser:root
-# exec ~/.config/sway/locale1-xkb-config
 
-bindsym $mod+semicolon exec ~/.config/sway/window-switcher
+include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'

@@ -85,6 +85,8 @@ ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 #typeset -A ZSH_HIGHLIGHT_STYLES
 #ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
 
+zstyle ':completion:*' rehash true
+
 # ------------------
 # Initialize modules
 # ------------------
@@ -111,7 +113,4 @@ source ${ZIM_HOME}/init.zsh
 
 export PATH="$HOME/.local/bin:$PATH"
 
-# export PS1="%B%{$(tput setaf 226)%}[%n%{$(tput setaf 214)%}@%{$(tput setaf 219)%}%m %{$(tput setaf 227)%}%~]%{$(tput sgr0)%}$%b "
-#
-
-PROMPT='%n@%m:%~%(!.#.$) '
+PROMPT='%B%n@%m:%~%(!.#.$)%b '

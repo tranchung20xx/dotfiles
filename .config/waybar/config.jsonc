@@ -3,9 +3,9 @@
     "output": "eDP-1",
     // "layer": "top",
     "position": "bottom",
-    "height": 36,
+    // "height": 36,
     // "width": 1280,
-    "spacing": 4,
+    "spacing": 6,
 
     "modules-left": [
         "sway/workspaces",
@@ -98,7 +98,8 @@
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
         "format-icons": [
-            "",
+            "",
+            "",
             "",
             ""
         ]
@@ -109,7 +110,7 @@
         "format-icons": [
             "󰃞",
             "󰃟",
-	    "󰃠"
+            "󰃠"
         ]
     },
 
@@ -147,7 +148,7 @@
         "tooltip": true,
         "format-icons": {
             "default": "󰓅",
-            "performance": "󰓅",
+            "performance": "󱐋",
             "balanced": "󰗑",
             "power-saver": "󰌪"
         }

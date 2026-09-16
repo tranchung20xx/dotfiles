@@ -1,1 +1,3 @@
-export ZDOTDIR=export ZDOTDIR="$HOME/.zsh"
+export ZDOTDIR="$HOME/.zsh"
+. "$HOME/.cargo/env"
+. "$HOME/.local/bin"
