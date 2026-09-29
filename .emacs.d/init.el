@@ -10,7 +10,7 @@
 (use-package emacs
   :ensure nil
   :config
-  (add-to-list 'default-frame-alist '(font . "Iosevka 26"))
+  (load custom-file 'noerror 'nomessage)
 
   :bind
   (("C-," . duplicate-dwim)
@@ -21,19 +21,7 @@
   (emacs-startup . (lambda ()
                      (setq gc-cons-threshold (* 32 1024 1024)
                            gc-cons-percentage 0.1
-                           file-name-handler-alist sane--file-name-handler-alist))))
-
-(use-package autorevert
-  :ensure nil)
-
-(use-package so-long
-  :ensure nil)
-
-(use-package dired
-  :ensure nil)
-
-(use-package dired-x
-  :ensure nil)
+                           file-name-handler-alist (delete-dups (append file-name-handler-alist sane--file-name-handler-alist))))))
 
 (use-package compile
   :ensure nil
@@ -44,12 +32,8 @@
 
 (use-package xterm-color
   :after compile
-  :config
   :custom
   (compilation-environment '("TERM=xterm-256color")))
-
-(use-package whitespace
-  :ensure nil)
 
 (use-package icomplete
   :ensure nil
@@ -80,11 +64,10 @@
          . paredit-mode))
 
 (use-package company
-  :defer t
-  :custom
-  (global-company-mode t))
+  :hook (after-init . global-company-mode))
 
 (use-package company-shell
+  :after company
   :config
   (add-to-list 'company-backends '(company-shell company-shell-env company-fish-shell)))
 
@@ -97,20 +80,21 @@
 (use-package magit :defer t)
 
 (use-package editorconfig
-  :ensure nil)
+  :ensure nil
+  :config (editorconfig-mode 1))
 
 (use-package gtags-mode
   :defer t
   :custom (gtags-mode-lighter " gtags")
   :hook (prog-mode . gtags-mode)
-  :config
+  :init
   (setenv "GTAGSLABEL" "native-pygments")
   (setenv "GTAGSCONF" "/etc/gtags.conf"))
 
 (use-package dtrt-indent
   :defer t
   :custom (dtrt-indent-lighter "")
-  :hook (prog-mode . dtrt-indent-global-mode))
+  :hook (prog-mode . dtrt-indent-mode))
 
 (use-package d-mode          :defer t)
 (use-package go-mode         :defer t)
@@ -129,8 +113,6 @@
   (use-package my-misc
     :ensure nil
     :load-path "~/.emacs.d/misc"))
-
-(load custom-file)
 
 (provide 'init)
 ;;; init.el ends here

@@ -27,7 +27,7 @@ zmodule utility
 # Exposes how long the last command took to run to prompts.
 # zmodule duration-info
 # Exposes git repository status information to prompts.
-zmodule git-info
+# zmodule git-info
 # A heavily reduced, ASCII-only version of the Spaceship and Starship prompts.
 # zmodule asciiship
 
@@ -54,3 +54,4 @@ zmodule zsh-users/zsh-history-substring-search
 # Fish-like autosuggestions for Zsh. Add the following to your ~/.zshrc to boost
 # performance: ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 # zmodule zsh-users/zsh-autosuggestions
+

@@ -23,7 +23,7 @@
 
     # The width of the window, excluding the frame.
     # dynamic width from 0 to 300
-    # width = (0, 300)
+    # width = (0, 900)
     # constant width of 300
     width = (500, 900)
 
@@ -190,7 +190,8 @@
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
-    alignment = left
+    # alignment = left
+    alignment = center
 
     # Vertical alignment of message text and icon.
     # Possible values are "top", "center" and "bottom".
@@ -224,7 +225,7 @@
     enable_recursive_icon_lookup = true
 
     # Set icon theme (only used for recursive icon lookup)
-    icon_theme = Adwaita
+    icon_theme = "MoreWaita, Adwaita"
     # You can also set multiple icon themes, with the leftmost one being used first.
     # icon_theme = "Adwaita, breeze"
 

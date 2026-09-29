@@ -66,7 +66,7 @@ WORDCHARS=${WORDCHARS//[\/]}
 
 # Disable automatic widget re-binding on each precmd. This can be set when
 # zsh-users/zsh-autosuggestions is the last module in your ~/.zimrc.
-ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+#ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
 # Customize the style that the suggestions are shown with.
 # See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
@@ -110,7 +110,5 @@ fi
 source ${ZIM_HOME}/init.zsh
 # }}} End configuration added by Zim Framework install
 #
-
-export PATH="$HOME/.local/bin:$PATH"
 
 PROMPT='%B%n@%m:%~%(!.#.$)%b '

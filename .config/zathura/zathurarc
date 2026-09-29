@@ -15,6 +15,8 @@
 # copy to clipboard
 set selection-clipboard clipboard
 
+set window-title-basename true
+
 # keep several lines of text when
 # scrolling a screenful
 
@@ -22,17 +24,12 @@ set font "Iosevka 22"
 
 # set scroll-full-overlap 0.2
 
-# see documentation for details
-# set scroll-page-aware true
-set window-title-basename true
 set adjust-open width
-# set statusbar-home-tilde true
-# set vertical-center true
 set synctex true
 # large bold font easier on the eyes in index mode
 # status bar can be disabled with A-s
-set zoom-step 3
-set scroll-step 120
+set zoom-step 4
+set scroll-step 140
 
 # Emacs-keybindings
 map [normal] <C-b> scroll left
@@ -210,47 +207,3 @@ map [presentation] <M-v> navigate previous
 map [presentation] <C-v> navigate next
 map [presentation] <A-\<> goto top
 map [presentation] <A-\>> goto bottom
-
-set notification-error-bg       "rgba(0,0,0,1)"        # bg
-set notification-error-fg       "rgba(255,85,85,1)"    # bright:red
-set notification-warning-bg     "rgba(0,0,0,1)"        # bg
-set notification-warning-fg     "rgba(241,250,140,1)"  # bright:yellow
-set notification-bg             "rgba(0,0,0,1)"        # bg
-set notification-fg             "rgba(255,255,255,1)"  # fg
-
-set completion-bg               "rgba(25,25,25,1)"     # bg2 (slightly lighter for contrast)
-set completion-fg               "rgba(255,255,255,1)"  # fg
-set completion-group-bg         "rgba(0,0,0,1)"        # bg1
-set completion-group-fg         "rgba(170,170,170,1)"  # gray
-set completion-highlight-bg     "rgba(255,255,255,1)"  # inverted bg
-set completion-highlight-fg     "rgba(0,0,0,1)"        # inverted fg
-
-# Define the color in index mode
-# set index-bg                  "rgba(0,0,0,1)"        # bg
-# set index-fg                  "rgba(255,255,255,1)"  # fg
-# set index-active-bg           "rgba(255,255,255,1)"  # inverted bg
-# set index-active-fg           "rgba(0,0,0,1)"        # inverted fg
-
-set inputbar-bg                 "rgba(0,0,0,1)"        # bg
-set inputbar-fg                 "rgba(255,255,255,1)"  # fg
-
-set statusbar-bg                "rgba(25,25,25,1)"     # bg2
-set statusbar-fg                "rgba(255,255,255,1)"  # fg
-
-set highlight-color             "rgba(255,255,255,0.3)" # semi-transparent white
-set highlight-active-color      "rgba(255,255,255,0.6)" # brighter transparent white
-
-set default-bg                  "rgba(0,0,0,1)"        # bg
-set default-fg                  "rgba(255,255,255,1)"  # fg
-set render-loading              true
-set render-loading-bg           "rgba(0,0,0,1)"        # bg
-set render-loading-fg           "rgba(255,255,255,1)"  # fg
-
-# Recolor book content's color
-set recolor-lightcolor          "rgba(0,0,0,1)"        # pure black document background
-set recolor-darkcolor           "rgba(255,255,255,1)"  # pure white document text
-set recolor                     "true"
-set recolor-keephue             "true"                 # keep original color for images/links
-
-set highlight-color             "rgba(217,119,6,0.4)"   # Màu cam/vàng hổ phách mờ 40% (giữ chữ trắng bên dưới dễ đọc)
-set highlight-active-color      "rgba(245,158,11,0.6)"  # Màu vàng sáng hơn khi kích hoạt

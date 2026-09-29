@@ -1,0 +1,5 @@
+README\.md
+build-emacs\.sh
+sway/assign-cgroups-rs
+\.git.*
+\.stow-local-ignore

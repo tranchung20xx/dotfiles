@@ -1,6 +1,6 @@
 ;;; gruber-darker-theme.el --- Gruber Darker color theme -*- lexical-binding: t; -*-
 
-(deftheme gruber-darker "Gruber Darker color theme for Emacs 24")
+(deftheme gruber-darker "Gruber Darker color theme.")
 
 (let ((gruber-darker-fg        "#e4e4ef")
       (gruber-darker-fg+1      "#f4f4ff")
@@ -68,7 +68,7 @@
    `(error               ((t (:foreground ,gruber-darker-red+1))))
 
    ;; Calendar
-   `(holiday-face ((t (:foreground ,gruber-darker-red))))
+   `(holiday ((t (:foreground ,gruber-darker-red))))
 
    ;; Compilation
    `(compilation-info           ((t (:foreground ,gruber-darker-green))))
@@ -130,26 +130,29 @@
    `(font-lock-comment-delimiter-face ((t (:foreground ,gruber-darker-brown))))
    `(font-lock-constant-face          ((t (:foreground ,gruber-darker-quartz))))
    `(font-lock-doc-face               ((t (:foreground ,gruber-darker-green))))
-   `(font-lock-doc-string-face        ((t (:foreground ,gruber-darker-green))))
+   `(font-lock-escape-face            ((t (:foreground ,gruber-darker-brown))))
    `(font-lock-function-name-face     ((t (:foreground ,gruber-darker-niagara))))
    `(font-lock-keyword-face           ((t (:foreground ,gruber-darker-yellow :bold t))))
+   `(font-lock-number-face            ((t (:foreground ,gruber-darker-wisteria))))
+   `(font-lock-operator-face          ((t (:foreground ,gruber-darker-fg))))
    `(font-lock-preprocessor-face      ((t (:foreground ,gruber-darker-quartz))))
-   `(font-lock-reference-face         ((t (:foreground ,gruber-darker-quartz))))
+   `(font-lock-property-name-face     ((t (:foreground ,gruber-darker-fg+1))))
+   `(font-lock-property-use-face      ((t (:foreground ,gruber-darker-fg+1))))
    `(font-lock-string-face            ((t (:foreground ,gruber-darker-green))))
    `(font-lock-type-face              ((t (:foreground ,gruber-darker-quartz))))
    `(font-lock-variable-name-face     ((t (:foreground ,gruber-darker-fg+1))))
    `(font-lock-warning-face           ((t (:foreground ,gruber-darker-red))))
 
    ;; Flymake
-   `(flymake-errline
+   `(flymake-error
      ((((supports :underline (:style wave)))
        (:underline (:style wave :color ,gruber-darker-red)))
       (t (:foreground ,gruber-darker-red :weight bold :underline t))))
-   `(flymake-warnline
+   `(flymake-warning
      ((((supports :underline (:style wave)))
        (:underline (:style wave :color ,gruber-darker-yellow)))
       (t (:foreground ,gruber-darker-yellow :weight bold :underline t))))
-   `(flymake-infoline
+   `(flymake-note
      ((((supports :underline (:style wave)))
        (:underline (:style wave :color ,gruber-darker-green)))
       (t (:foreground ,gruber-darker-green :weight bold :underline t))))
@@ -270,8 +273,8 @@
    `(sh-quoted-exec ((t (:foreground ,gruber-darker-red+1))))
 
    ;; Show Paren
-   `(show-paren-match-face    ((t (:background ,gruber-darker-bg+4))))
-   `(show-paren-mismatch-face ((t (:background ,gruber-darker-red-1))))
+   `(show-paren-match    ((t (:background ,gruber-darker-bg+4))))
+   `(show-paren-mismatch ((t (:background ,gruber-darker-red-1))))
 
    ;; Slime
    `(slime-repl-inputed-output-face ((t (:foreground ,gruber-darker-red))))

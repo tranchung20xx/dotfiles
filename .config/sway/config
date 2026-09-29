@@ -145,6 +145,8 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
+
 # 26-wlr-mirror-mode.conf
 # Screen mirroring setup for sway using wlr-mirror
 # Dependency: https://github.com/Ferdi265/wl-mirror
@@ -167,8 +169,6 @@ bindsym $mod+r mode "resize"
 # bindsym $mod+p mode "present"
 
 # 69-input-settings.conf
-### Input configuration
-#
 input type:touchpad {
     dwt enabled
     tap enabled
@@ -202,18 +202,28 @@ input "10429:2323:Hanvon_ugee_4_inch_PenTablet_Pen" {
 # 81-float-this-window.conf
 ### tOTALLY ai sLops
 
-for_window [window_role="^(pop-up|task_dialog|dialog|utility|Preferences|About|Open|Save|Properties|Confirmation|Print|Page Setup|File peration Progress)$"] floating enable
+for_window [window_role="^(pop-up|task_dialog|dialog|utility|Preferences|About|Open|Save|Properties|Confirmation|Print|Page Setup|File Operation Progress)$"] floating enable
 for_window [window_role="(?i).*(picker|chooser|selector).*"] floating enable
 
-for_window [app_id="thunar" title=".*Progress.*"] floating enable
-for_window [app_id="thunar" title=".*Confirm.*"] floating enable
-for_window [app_id="thunar" title=".*Error.*"] floating enable
-for_window [app_id="thunar" title="^Properties$"] floating enable
-for_window [app_id="thunar" window_role="thunar-preferences"] floating enable
+for_window [app_id="pcmanfm" title=".*Progress.*"] floating enable
+for_window [app_id="pcmanfm" title=".*Confirm.*"] floating enable
+for_window [app_id="pcmanfm" title=".*Error.*"] floating enable
+for_window [app_id="pcmanfm" title="^Properties$"] floating enable
+for_window [app_id="pcmanfm" window_role="pcmanfm-preferences"] floating enable
 
 for_window [app_id="localsend"] floating enable
 
 for_window [window_role="^(plugin-window|toolbox|color_chooser|file_chooser)$"] floating enable
+
+# Catch any child/transient window (dialogs, popups, etc.) regardless of app
+for_window [window_type="dialog"] floating enable
+for_window [window_type="utility"] floating enable
+for_window [window_type="toolbar"] floating enable
+for_window [window_type="splash"] floating enable
+for_window [window_type="menu"] floating enable
+
+# Archive manager windows
+for_window [app_id="xarchiver"] floating enable
 
 # 95-pic-in-picture.conf
 # Picture in picture setting for swaywm
@@ -224,19 +234,19 @@ for_window [window_role="PictureInPicture"] floating enable, sticky enable
 # Dependency: https://github.com/coffeeispower/woomer
 bindsym $mod+x exec ~/.local/bin/woomer
 
-set $screenshot_name $(date +%Y-%m-%d-%H-%M-%S)
+set $name $(date +%Y-%m-%d_%H-%M-%S)
+set $var GRIMSHOT_FILENAME_FORMAT
+set $grimshot grimshot --notify
 mode "screenshot" {
-    bindsym s exec         GRIMSHOT_FILENAME_FORMAT=$screenshot_name grimshot --notify savecopy area; mode "default"
-    bindsym Shift+s exec   GRIMSHOT_FILENAME_FORMAT=$screenshot_name grimshot --notify save area; mode "default"
-    bindsym Control+s exec GRIMSHOT_FILENAME_FORMAT=$screenshot_name grimshot --notify save active; mode "default"
-    bindsym a exec         GRIMSHOT_FILENAME_FORMAT=$screenshot_name grimshot --notify save output; mode "default"
-    bindsym Shift+a exec   GRIMSHOT_FILENAME_FORMAT=$screenshot_name grimshot --notify save; mode "default"
-    bindsym w exec         GRIMSHOT_FILENAME_FORMAT=$screenshot_name grimshot --notify save window; mode "default"
+    bindsym c       exec $var=$name $grimshot savecopy area; mode "default"
+    bindsym a       exec $var=$name $grimshot save area    ; mode "default"
+    bindsym o       exec $var=$name $grimshot save output  ; mode "default"
+    bindsym w       exec $var=$name $grimshot save active  ; mode "default"
+    bindsym Shift+w exec $var=$name $grimshot save window  ; mode "default"
+    bindsym s       exec $var=$name $grimshot save         ; mode "default"
     bindsym Escape mode "default"
+    bindsym $mod+s mode "default"
 }
 bindsym $mod+s mode "screenshot"
 
 ################################################################
-exec xhost +SI:localuser:root
-
-include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'

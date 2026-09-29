@@ -1,2 +1,9 @@
 .emacs.d/user
 .emacs.d/elpa
+*.elc
+
+# Zsh runtime state and cache
+.zsh/.zcompcache/
+.zsh/.zcompdump*
+.zsh/.zhistory
+.zsh/.zim/

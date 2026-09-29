@@ -9,17 +9,24 @@
       gc-cons-percentage 1
       file-name-handler-alist nil)
 
-(setq user-emacs-directory "~/.emacs.d/user")
+(setq user-emacs-directory (expand-file-name "user/" "~/.emacs.d/"))
 (when (boundp 'native-comp-eln-load-path)
   (add-to-list 'native-comp-eln-load-path
                (expand-file-name "eln-cache/" user-emacs-directory)))
 
 (setq inhibit-splash-screen t
-      redisplay-dont-pause t
-      inhibit-startup-message t
-      read-process-output-max (* 1024 1024)
+      frame-resize-pixelwise t
+      frame-inhibit-implied-resize t
+      redisplay-skip-fontification-on-input t
+      window-resize-pixelwise t
       inhibit-compacting-font-caches t
-      pgtk-wait-for-event-timeout 0)
+      bidi-inhibit-bpa t
+      pgtk-wait-for-event-timeout 0.001
+      read-process-output-max (* 1024 1024)
+      auto-window-vscroll nil
+      inhibit-startup-echo-area-message user-login-name
+      inhibit-x-resources t ; wayland
+      process-adaptive-read-buffering nil)
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)

@@ -36,7 +36,7 @@
  '(dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'\\|^\\..+$")
  '(dired-recursive-copies 'always)
  '(disabled-command-function 'ignore t)
- '(display-line-numbers-type 'relative)
+ '(display-line-numbers-grow-only t)
  '(duplicate-line-final-position -1)
  '(eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider))
  '(electric-pair-mode t)
