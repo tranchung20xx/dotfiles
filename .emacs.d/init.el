@@ -19,7 +19,7 @@
   :hook
   (before-save . delete-trailing-whitespace)
   (emacs-startup . (lambda ()
-                     (setq gc-cons-threshold (* 32 1024 1024)
+                     (setq gc-cons-threshold (* 128 1024 1024) ; 128MB — avoids GC during Magit diffs
                            gc-cons-percentage 0.1
                            file-name-handler-alist (delete-dups (append file-name-handler-alist sane--file-name-handler-alist))))))
 
@@ -29,11 +29,6 @@
   :config
   (add-to-list 'compilation-error-regexp-alist
                '("\\([^()\n]+\\)(\\([0-9]+\\)\\(,\\([0-9]+\\)\\)?) \\(Warning:\\)?" 1 2 (4) (5))))
-
-(use-package xterm-color
-  :after compile
-  :custom
-  (compilation-environment '("TERM=xterm-256color")))
 
 (use-package icomplete
   :ensure nil
@@ -64,7 +59,15 @@
          . paredit-mode))
 
 (use-package company
-  :hook (after-init . global-company-mode))
+  :hook (after-init . global-company-mode)
+  :custom
+  (company-idle-delay 0.3)          ; don't trigger on every keystroke
+  (company-minimum-prefix-length 2) ; wait for at least 2 chars
+  (company-dabbrev-downcase nil)    ; skip expensive case folding
+  (company-dabbrev-ignore-case t)
+  :config
+  ;; Disable company in Magit buffers — it causes significant lag
+  (add-hook 'magit-mode-hook (lambda () (company-mode -1))))
 
 (use-package company-shell
   :after company
@@ -77,7 +80,18 @@
   (yas-snippet-dirs `(,(expand-file-name "~/.emacs.d/snippets"))))
 
 (use-package transient :defer t)
-(use-package magit :defer t)
+(use-package magit
+  :defer t
+  :custom
+  (magit-diff-refine-hunk 'all)
+  (magit-auto-revert-mode nil)
+  (magit-refresh-status-buffer nil)
+  (magit-status-show-hashes-in-headers nil)
+  (magit-diff-paint-whitespace nil)
+  :config
+  (add-hook 'magit-diff-mode-hook
+            (lambda ()
+              (setq-local font-lock-maximum-decoration 1))))
 
 (use-package editorconfig
   :ensure nil
@@ -96,6 +110,16 @@
   :custom (dtrt-indent-lighter "")
   :hook (prog-mode . dtrt-indent-mode))
 
+(use-package dired-subtree
+  :ensure t
+  :after dired
+  :config
+  (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
+  (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map)
+  ;; (define-key dired-mode-map (kbd "i") #'dired-subtree-insert)
+  ;; (define-key dired-mode-map (kbd ";") #'dired-subtree-remove)
+)
+
 (use-package d-mode          :defer t)
 (use-package go-mode         :defer t)
 (use-package lua-mode        :defer t)
@@ -106,8 +130,14 @@
 (use-package cmake-mode      :defer t)
 (use-package meson-mode      :defer t)
 (use-package ninja-mode      :defer t)
+(use-package groovy-mode     :defer t)
 (use-package markdown-mode   :defer t)
 (use-package typescript-mode :defer t)
+
+(use-package ghostel
+  :hook (after-init . ghostel-compile-global-mode)
+  :custom
+  (ghostel-compile-global-mode-excluded-modes nil))
 
 (when (file-directory-p "~/.emacs.d/misc")
   (use-package my-misc

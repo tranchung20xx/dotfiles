@@ -13,8 +13,6 @@
  '(company-dabbrev-code-everywhere t)
  '(company-dabbrev-code-ignore-case t)
  '(company-dabbrev-code-other-buffers 'code)
- '(company-dabbrev-downcase nil)
- '(company-dabbrev-ignore-case nil)
  '(compilation-always-kill t)
  '(compilation-scroll-output t)
  '(completion-styles '(flex))
@@ -25,6 +23,7 @@
    '("71db67ea6e739968ca6d8a6d16cf86afd7dda23d129c8eeec98077f66a13d637"
      "09276f492e8e604d9a0821ef82f27ce58b831f90f49f986b4d93a006c12dbcdb"
      default))
+ '(delete-by-moving-to-trash t)
  '(delete-selection-mode t)
  '(dired-auto-revert-buffer t)
  '(dired-clean-confirm-killing-deleted-buffers nil)
@@ -52,14 +51,19 @@
  '(indent-tabs-mode nil)
  '(make-backup-files nil)
  '(minibuffer-electric-default-mode t)
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(cmake-mode company company-shell d-mode dired-subtree dtrt-indent
+                dts-mode ghostel ghostel-compile go-mode groovy-mode
+                gtags-mode json-mode kconfig-mode lua-mode magit
+                markdown-mode meson-mode move-text multiple-cursors
+                ninja-mode paredit qml-mode rust-mode typescript-mode
+                xterm-color yaml-mode yasnippet))
  '(prog-mode-hook '(whitespace-mode))
  '(ring-bell-function 'ignore)
  '(show-paren-mode t)
  '(tab-width 4)
  '(text-mode-hook '(whitespace-mode text-mode-hook-identify))
  '(treesit-enabled-modes t)
- '(treesit-font-lock-level 2)
  '(use-short-answers t)
  '(whitespace-style
    '(face trailing tabs spaces newline empty indentation space-after-tab

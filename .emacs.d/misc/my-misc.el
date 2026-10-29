@@ -119,9 +119,9 @@ Return position past the candidate, or nil if CAND is not found."
   (unless (executable-find "fd")
     (user-error "fd not found on PATH"))
   (let* ((default-directory (or (and (fboundp 'project-root)
-                                      (when-let ((proj (project-current)))
-                                        (project-root proj)))
-                                 default-directory))
+                                     (when-let ((proj (project-current)))
+                                       (project-root proj)))
+                                default-directory))
          (choice (completing-read
                   (format "Find file in %s: " default-directory)
                   (process-lines "fd" "--type" "f" "--hidden" "--exclude" ".git"

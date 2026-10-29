@@ -18,6 +18,7 @@
       frame-resize-pixelwise t
       frame-inhibit-implied-resize t
       redisplay-skip-fontification-on-input t
+      redisplay-dont-pause t
       window-resize-pixelwise t
       inhibit-compacting-font-caches t
       bidi-inhibit-bpa t
@@ -25,7 +26,6 @@
       read-process-output-max (* 1024 1024)
       auto-window-vscroll nil
       inhibit-startup-echo-area-message user-login-name
-      inhibit-x-resources t ; wayland
       process-adaptive-read-buffering nil)
 
 (menu-bar-mode -1)
