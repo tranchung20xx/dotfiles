@@ -27,32 +27,59 @@
   "Face for the determined (sole/bracketed) match in icomplete."
   :group 'my-icomplete-faces)
 
+(defconst my/icomplete--buf-tag-re "<[^>]+>\\'"
+  "Regexp matching buffer uniquification tags like <dir>.")
+
+;; Cache the completion category for the duration of each minibuffer session.
+(defvar-local my/icomplete--cached-category 'unset
+  "Cached completion category; `unset' means not yet computed.")
+
 (defun my/icomplete--category ()
-  "Return the completion category for the current minibuffer session."
-  (completion-metadata-get
-   (completion-metadata (minibuffer-contents)
-                        minibuffer-completion-table
-                        minibuffer-completion-predicate)
-   'category))
+  "Return the completion category for the current minibuffer session.
+Result is cached in `my/icomplete--cached-category' for the lifetime of
+the minibuffer so that `completion-metadata' is only called once."
+  (if (eq my/icomplete--cached-category 'unset)
+      (setq my/icomplete--cached-category
+            (completion-metadata-get
+             (completion-metadata (minibuffer-contents)
+                                  minibuffer-completion-table
+                                  minibuffer-completion-predicate)
+             'category))
+    my/icomplete--cached-category))
 
 ;; Minibuffer input: highlight the directory prefix typed so far
 
 (defun my/mb-setup ()
   "Overlay the directory prefix in minibuffer input with `icomplete-dir' face."
+  ;; Always reset the cache at session start -- minibuffer buffers are reused,
+  ;; so a stale value from the previous session would contaminate this one.
+  (setq-local my/icomplete--cached-category 'unset)
   (when (memq (my/icomplete--category) '(file buffer))
     (let* ((ov (make-overlay 1 1 nil t t))
            (update (lambda (&rest _)
-                     (let ((beg (minibuffer-prompt-end)))
-                       (save-excursion
-                         (goto-char (point-max))
-                         (let ((end (if (search-backward "/" beg t)
-                                        (1+ (point))
-                                      beg)))
-                           (move-overlay ov beg end)))))))
+                     (let* ((beg (minibuffer-prompt-end))
+                            (end (save-excursion
+                                   (goto-char (point-max))
+                                   (if (search-backward "/" beg t)
+                                       (1+ (point))
+                                     beg))))
+                       ;; Skip move-overlay when bounds are unchanged.
+                       (unless (and (= (overlay-start ov) beg)
+                                    (= (overlay-end ov) end))
+                         (move-overlay ov beg end)))))
+           ;; Declare cleanup as a variable so it can remove itself.
+           cleanup)
+      (setq cleanup
+            (lambda ()
+              (delete-overlay ov)
+              ;; Remove both hooks so they don't accumulate across sessions
+              ;; in the reused minibuffer buffer.
+              (remove-hook 'after-change-functions update t)
+              (remove-hook 'minibuffer-exit-hook cleanup t)))
       (overlay-put ov 'face 'icomplete-dir)
       (overlay-put ov 'priority 100)
       (add-hook 'after-change-functions update nil t)
-      (add-hook 'minibuffer-exit-hook (lambda () (delete-overlay ov)) nil t)
+      (add-hook 'minibuffer-exit-hook cleanup nil t)
       (funcall update))))
 
 (add-hook 'minibuffer-setup-hook #'my/mb-setup)
@@ -63,11 +90,11 @@
   "Highlight directory part of CAND found at POS in string S.
 If IS-BUF is non-nil, also highlight <dir> uniquification tags.
 Return position past the candidate, or nil if CAND is not found."
-  (when-let ((m (string-search cand s pos)))
+  (when-let* ((m (string-search cand s pos)))
     (let* ((len (length cand))
            (tag-beg (and is-buf (> len 2)
                          (eq (aref cand (1- len)) ?>)
-                         (string-match "<[^>]+>\\'" cand)
+                         (string-match my/icomplete--buf-tag-re cand)
                          (match-beginning 0)))
            (base (if tag-beg (substring cand 0 tag-beg) cand))
            (dir-len (length (or (file-name-directory base) ""))))
@@ -87,7 +114,7 @@ Return position past the candidate, or nil if CAND is not found."
               (len (length s))
               (comps (completion-all-sorted-completions)))
           (while (and (consp comps) (stringp (car comps)) (< pos len))
-            (if-let ((new-pos (my/icomplete--highlight-candidate
+            (if-let* ((new-pos (my/icomplete--highlight-candidate
                                s pos (car comps) is-buf)))
                 (setq pos new-pos comps (cdr comps))
               (setq comps nil)))))
@@ -106,6 +133,7 @@ Return position past the candidate, or nil if CAND is not found."
             (unless (string-suffix-p "/" (buffer-name))
               (rename-buffer (concat (buffer-name) "/") t))))
 
+
 (defun my/smart-electric-indent (_)
   (let ((ppss (syntax-ppss)))
     (when (or (nth 3 ppss)
@@ -119,7 +147,7 @@ Return position past the candidate, or nil if CAND is not found."
   (unless (executable-find "fd")
     (user-error "fd not found on PATH"))
   (let* ((default-directory (or (and (fboundp 'project-root)
-                                     (when-let ((proj (project-current)))
+                                     (when-let* ((proj (project-current)))
                                        (project-root proj)))
                                 default-directory))
          (choice (completing-read
